@@ -1,0 +1,11 @@
+---
+Name: pp-indexnow--config
+---
+
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - IndexNow\Extensions\SiteConfigExtension
+
+Page:
+  extensions:
+    - IndexNow\Extensions\PageExtension

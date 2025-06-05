@@ -1,0 +1,37 @@
+{
+    "name": "pixelpoems/silverstripe-indexnow",
+    "description": "Silverstripe module for IndexNow handling",
+    "type": "silverstripe-vendormodule",
+    "keywords": [
+        "silverstripe",
+        "bing",
+        "indexnow"
+    ],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Bettina Wagner-Löffler",
+            "homepage": "https://www.pixelpoems.com/",
+            "role": "Lead Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.1",
+        "silverstripe/cms": "^5.0",
+        "silverstripe/framework": "^5.0",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pixelpoems\\IndexNow\\": "src/"
+        }
+    },
+    "extra": {
+        "installer-name": "silverstripe-indexnow",
+        "branch-alias": {
+            "dev-main": "1.x-dev"
+        }
+    }
+}
