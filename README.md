@@ -23,9 +23,9 @@ composer require pixelpoems/silverstripe-indexnow
 ## Configuration
 [//]: # (ToDo)
 
--- Add your IndexNow API within the siteconfig, with no additional whitespace or newlines.
--- Enable the indexing of your site by setting the `IndexNowEnabled` checkbox in the siteconfig.
--- Add `/public/indexnow_api_key.txt` to your .gitignore file to prevent it from being committed to your repository.
+- Add your IndexNow API within the siteconfig, with no additional whitespace or newlines.
+- Enable the indexing of your site by setting the `IndexNowEnabled` checkbox in the siteconfig.
+- Add `/public/indexnow_api_key.txt` to your .gitignore file to prevent it from being committed to your repository.
 
 ## Reporting Issues
 
