@@ -2,8 +2,7 @@
 
 [![stability-beta](https://img.shields.io/badge/stability-beta-33bbff.svg)](https://github.com/mkenney/software-guides/blob/master/STABILITY-BADGES.md#beta)
 
-This module adds a simple cookie consent banner to your Silverstripe website. It uses the [CookieConsent v3](https://cookieconsent.orestbida.com/) script.
-You can use it with the [Fluent](https://github.com/tractorcow-farm/silverstripe-fluent) translation module.
+This module provides a Silverstripe CMS integration for the [IndexNow](https://www.indexnow.org/) protocol, allowing you to notify search engines about changes to your website content in real-time during publishing of a page.
 
 * [Requirements](#requirements)
 * [Installation](#installation)
@@ -13,7 +12,7 @@ You can use it with the [Fluent](https://github.com/tractorcow-farm/silverstripe
 ## Requirements
 
 * Silverstripe CMS ^5.0
-* Silverstripe Framework >=5.0
+* Silverstripe Framework ^5.0
 
 ## Installation
 ```
