@@ -6,6 +6,7 @@ use SilverStripe\Core\Extension;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\Tab;
 use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\Control\Director;
 
 class PageExtension extends Extension
 {
@@ -54,7 +55,7 @@ class PageExtension extends Extension
             $url = $this->owner->AbsoluteLink();
             $url = urlencode($url); // URL encode the URL
 
-            $requestURL = $endpoint . '/indexnow?url=' . $url . '&key=' . $apiKey;
+            $requestURL = $endpoint . '/indexnow?url=' . $url . '&key=' . $apiKey . '&keyLocation=' . Director::baseURL() . '/indexnow_api_key.txt';
 
             // GET request to the IndexNow API with getContent and HTTP headers
             $response = file_get_contents($requestURL, false, stream_context_create([
