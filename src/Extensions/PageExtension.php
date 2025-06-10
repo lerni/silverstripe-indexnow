@@ -2,11 +2,11 @@
 
 namespace IndexNow\Extensions;
 
+use SilverStripe\Control\Director;
 use SilverStripe\Core\Extension;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Forms\Tab;
 use SilverStripe\SiteConfig\SiteConfig;
-use SilverStripe\Control\Director;
 
 class PageExtension extends Extension
 {
@@ -42,6 +42,10 @@ class PageExtension extends Extension
 
     public function submitUrlForIndexNow()
     {
+        if (!Director::isLive()) {
+            return; // Skip submission if not in live mode
+        }
+
         try {
             $siteConfig = SiteConfig::current_site_config();
             $apiKey = $siteConfig->IndexNowAPIKey;
