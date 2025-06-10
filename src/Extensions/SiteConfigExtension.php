@@ -10,7 +10,8 @@ class SiteConfigExtension extends Extension
 {
     private static array $db = [
         'IndexNowActive' => 'Boolean',
-        'IndexNowAPIKey' => 'Varchar(255)'
+        'IndexNowAPIKey' => 'Varchar(255)',
+        'IndexNowBaseURL' => 'Varchar(255)',
     ];
 
     public function updateCMSFields($fields)
@@ -20,6 +21,8 @@ class SiteConfigExtension extends Extension
                 CheckboxField::create('IndexNowActive', 'Enable IndexNow')
                     ->setDescription('Enable or disable the IndexNow service for all pages - this will allow your site to automatically notify search engines of content changes.'),
             )->setTitle('Enabled'),
+            TextField::create('IndexNowBaseURL', 'Base URL')
+                ->setDescription('The base URL for the of your site, which is set in your Webtools account. This is used to notify search engines of content changes. It should be in the format: https://example.com or https://www.example.com. (Without slash at the end)'),
             TextField::create('IndexNowAPIKey', 'API Key')
                 ->setDescription('Your IndexNow API key - you can get one from the IndexNow website <a href="https://www.bing.com/indexnow/getstarted#implementation">https://www.bing.com/indexnow/getstarted#implementation</a>.')
         ]);

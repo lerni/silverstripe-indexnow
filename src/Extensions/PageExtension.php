@@ -46,17 +46,14 @@ class PageExtension extends Extension
             $siteConfig = SiteConfig::current_site_config();
             $apiKey = $siteConfig->IndexNowAPIKey;
             $endpoint = 'https://api.indexnow.org'; // Endpoint for IndexNow API BING
-
             if (!$apiKey) {
                 throw new \Exception('IndexNow API Key or Host is not set.');
             }
-
             // Prepare the URL to submit
             $url = $this->owner->AbsoluteLink();
-            $url = urlencode($url); // URL encode the URL
+            $keyLocation = $siteConfig->IndexNowBaseURL . '/indexnow_api_key.txt';
 
-            $requestURL = $endpoint . '/indexnow?url=' . $url . '&key=' . $apiKey . '&keyLocation=' . Director::baseURL() . '/indexnow_api_key.txt';
-
+            $requestURL = $endpoint . '/indexnow?url=' . $url . '&key=' . $apiKey . '&keyLocation=' . $keyLocation;
             // GET request to the IndexNow API with getContent and HTTP headers
             $response = file_get_contents($requestURL, false, stream_context_create([
                 'http' => [
@@ -64,12 +61,10 @@ class PageExtension extends Extension
                     'header' => "Content-Type: application/json\r\n"
                 ]
             ]));
-
             // Check if the response is false
             if ($response === false) {
                 throw new \Exception('Failed to submit URL to IndexNow.');
             }
-
         } catch (\Exception $e) {
             // Handle any exceptions that may occur during the submission
             error_log('IndexNow submission failed: ' . $e->getMessage(), E_USER_ERROR);
