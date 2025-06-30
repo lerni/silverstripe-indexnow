@@ -11,8 +11,8 @@ This module provides a Silverstripe CMS integration for the [IndexNow](https://w
 
 ## Requirements
 
-* Silverstripe CMS ^5.0
-* Silverstripe Framework ^5.0
+* Silverstripe CMS ^5.0 || ^6.0
+* Silverstripe Framework ^5.0 || ^6.0
 
 ## Installation
 ```
