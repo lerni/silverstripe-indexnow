@@ -1,6 +1,6 @@
 {
     "name": "pixelpoems/silverstripe-indexnow",
-    "description": "Silverstripe module for IndexNow handling",
+    "description": "Silverstripe module for IndexNow handling (fork of pixelpoems/silverstripe-indexnow)",
     "type": "silverstripe-vendormodule",
     "keywords": [
         "silverstripe",
@@ -12,20 +12,25 @@
         {
             "name": "Bettina Wagner-Löffler",
             "homepage": "https://www.pixelpoems.com/",
-            "role": "Lead Developer"
+            "role": "Original Author"
+        },
+        {
+            "name": "Lukas Erni",
+            "homepage": "https://github.com/lerni",
+            "role": "Maintainer"
         }
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.1",
-        "silverstripe/cms": "^5.0 || ^6.0",
-        "silverstripe/framework": "^5.0 || ^6.0",
-        "ext-curl": "*"
+        "silverstripe/cms": "^6.0"
+    },
+    "suggest": {
+        "dorsetdigital/silverstripe-canonical": "Recommended for canonical URL management alongside IndexNow"
     },
     "autoload": {
         "psr-4": {
-            "Pixelpoems\\IndexNow\\": "src/"
+            "IndexNow\\": "src/"
         }
     },
     "extra": {

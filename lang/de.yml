@@ -1,0 +1,5 @@
+de:
+  IndexNow\Extensions\SiteConfigExtension:
+    IndexNowAPIKey: 'API-Schlüssel'
+    IndexNowAPIKeyDescription: '<a href="https://www.bing.com/indexnow/getstarted#implementation">IndexNow API-Schlüssel erstellen</a>. Hier oder vorzugsweise per Umgebungsvariable INDEXNOW_API_KEY setzen.'
+    IndexNowAPIKeyDescriptionEnv: 'API-Schlüssel ist über die Umgebungsvariable INDEXNOW_API_KEY gesetzt.'

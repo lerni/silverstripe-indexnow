@@ -1,47 +1,51 @@
 <?php
+
 namespace IndexNow\Extensions;
 
 use SilverStripe\Core\Extension;
-use SilverStripe\Forms\CheckboxField;
-use SilverStripe\Forms\CompositeField;
 use SilverStripe\Forms\TextField;
+use SilverStripe\Core\Environment;
+use SilverStripe\SiteConfig\SiteConfig;
 
+/**
+ * @extends Extension<SiteConfig>
+ */
 class SiteConfigExtension extends Extension
 {
     private static array $db = [
-        'IndexNowActive' => 'Boolean',
-        'IndexNowAPIKey' => 'Varchar(255)',
-        'IndexNowBaseURL' => 'Varchar(255)',
+        'IndexNowAPIKey' => 'Varchar',
     ];
 
-    public function updateCMSFields($fields)
+    public function updateCMSFields($fields): void
     {
+        $envKey = Environment::getEnv('INDEXNOW_API_KEY');
+
+        $apiKeyField = TextField::create(
+            'IndexNowAPIKey',
+            _t(self::class . '.IndexNowAPIKey', 'API Key'),
+        );
+
+        if ($envKey) {
+            $apiKeyField->setValue($envKey);
+            $apiKeyField->setDescription(_t(
+                self::class . '.IndexNowAPIKeyDescriptionEnv',
+                'API key is set via environment variable INDEXNOW_API_KEY.',
+            ));
+            $apiKeyField = $apiKeyField->performReadonlyTransformation();
+        } else {
+            $apiKeyField->setDescription(_t(
+                self::class . '.IndexNowAPIKeyDescription',
+                '<a href="https://www.bing.com/indexnow/getstarted#implementation">Get an IndexNow API key</a>. Set it here or preferably per environment variable INDEXNOW_API_KEY.',
+            ));
+        }
+
         $fields->addFieldsToTab('Root.IndexNow', [
-            CompositeField::create(
-                CheckboxField::create('IndexNowActive', 'Enable IndexNow')
-                    ->setDescription('Enable or disable the IndexNow service for all pages - this will allow your site to automatically notify search engines of content changes.'),
-            )->setTitle('Enabled'),
-            TextField::create('IndexNowBaseURL', 'Base URL')
-                ->setDescription('The base URL for the of your site, which is set in your Webtools account. This is used to notify search engines of content changes. It should be in the format: https://example.com or https://www.example.com. (Without slash at the end)'),
-            TextField::create('IndexNowAPIKey', 'API Key')
-                ->setDescription('Your IndexNow API key - you can get one from the IndexNow website <a href="https://www.bing.com/indexnow/getstarted#implementation">https://www.bing.com/indexnow/getstarted#implementation</a>.')
+            $apiKeyField,
         ]);
     }
 
-
-    public function onBeforeWrite()
+    public function getResolvedIndexNowAPIKey(): string
     {
-        // Save the API key in a txt file in public
-        if($this->owner->IndexNowActive && $this->owner->IndexNowAPIKey) {
-            $apiKey = $this->owner->IndexNowAPIKey;
-            $filePath = PUBLIC_PATH . '/indexnow_api_key.txt';
-            file_put_contents($filePath, $apiKey);
-        } else {
-            // If not active, remove the file
-            $filePath = PUBLIC_PATH . '/indexnow_api_key.txt';
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-        }
+        return Environment::getEnv('INDEXNOW_API_KEY') ?: ($this->getOwner()->IndexNowAPIKey ?: '');
     }
 }

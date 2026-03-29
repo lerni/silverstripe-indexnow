@@ -6,6 +6,12 @@ SilverStripe\SiteConfig\SiteConfig:
   extensions:
     - IndexNow\Extensions\SiteConfigExtension
 
-Page:
+SilverStripe\CMS\Model\SiteTree:
   extensions:
     - IndexNow\Extensions\PageExtension
+
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\Control\Director:
+    properties:
+      Middlewares:
+        IndexNowKeyMiddleware: '%$IndexNow\Middlewares\IndexNowKeyMiddleware'
