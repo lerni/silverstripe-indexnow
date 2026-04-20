@@ -35,7 +35,7 @@ class SiteConfigExtension extends Extension
         } else {
             $apiKeyField->setDescription(_t(
                 self::class . '.IndexNowAPIKeyDescription',
-                '<a href="https://www.bing.com/indexnow/getstarted#implementation">Get an IndexNow API key</a>. Set it here or preferably per environment variable INDEXNOW_API_KEY.',
+                '<a href="https://www.bing.com/indexnow/getstarted#implementation" target="_blank" rel="noopener noreferrer">Get an IndexNow API key</a>. Set it here or preferably per environment variable INDEXNOW_API_KEY.',
             ));
         }
 
