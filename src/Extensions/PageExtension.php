@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
 use SilverStripe\Core\Extension;
 use SilverStripe\Control\Director;
+use SilverStripe\Core\Config\Config;
 use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\Core\Injector\Injector;
 use GuzzleHttp\Exception\RequestException;
@@ -32,7 +33,7 @@ class PageExtension extends Extension
         try {
             $url = $this->getOwner()->AbsoluteLink();
 
-            $client = new Client(['timeout' => static::config()->get('timeout')]);
+            $client = new Client(['timeout' => Config::inst()->get(self::class, 'timeout')]);
             $client->get('https://api.indexnow.org/indexnow', [
                 'query' => [
                     'url' => $url,
