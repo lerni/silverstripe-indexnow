@@ -29,10 +29,21 @@ INDEXNOW_API_KEY="your-api-key-here"
 
 Alternatively, enter the key in **Settings → IndexNow** within the CMS. When an environment variable is set, the CMS field becomes read-only.
 
-Pages are submitted to IndexNow on publish when:
+URLs are submitted to IndexNow when:
 - An API key is configured (via `.env` or CMS)
-- The page has **Show in Search** enabled
 - The environment is `live`
+- The object exposes an `AbsoluteLink()`
+
+The extension fires on relevant lifecycle events:
+
+| Event | Object type | Trigger |
+|---|---|---|
+| Published to live | Versioned (e.g. pages) | `onAfterPublish` |
+| Unpublished from live | Versioned | `onAfterUnpublish` |
+| Created or updated | Non-Versioned (e.g. DataObjects with a URL) | `onAfterWrite` |
+| Deleted | Non-Versioned | `onBeforeDelete` |
+
+For Versioned objects, `ShowInSearch` is respected if the field exists. `IndexNowExtension` can be applied to any DataObject that has an `AbsoluteLink()` method, not just pages.
 
 The module serves the key verification file dynamically at `/{key}.txt` — no file system writes needed.
 
@@ -42,6 +53,8 @@ The module serves the key verification file dynamically at `/{key}.txt` — no f
 
 ## Changes from upstream
 
+- **Unified IndexNowExtension** — `PageExtension` and `UrlifyedObjExtension` merged into a single `IndexNowExtension`. Versioned-aware: uses `onAfterPublish`/`onAfterUnpublish` for versioned objects and `onAfterWrite`/`onBeforeDelete` for plain DataObjects. Applicable to any object with `AbsoluteLink()`.
+- **Unpublish and delete notifications** — Search engines are now pinged on unpublish and delete, allowing them to remove stale URLs from their index.
 - **ShowInSearch instead of DisableIndexNow** — Uses the built-in `ShowInSearch` field on `SiteTree` instead of a custom `DisableIndexNow` checkbox. No extra DB column, no extra CMS UI per page.
 - **No IndexNowActive toggle** — The API key presence is the on/off gate. No key = no submissions.
 - **Environment variable support** — API key can be set via `INDEXNOW_API_KEY` in `.env`. Falls back to the DB field in SiteConfig.

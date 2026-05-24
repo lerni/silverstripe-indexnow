@@ -36,7 +36,8 @@
     "extra": {
         "installer-name": "silverstripe-indexnow",
         "branch-alias": {
-            "dev-main": "1.x-dev"
+            "dev-main": "1.x-dev",
+            "dev-2.x": "2.x-dev"
         }
     }
 }

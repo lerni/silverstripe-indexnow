@@ -8,7 +8,7 @@ SilverStripe\SiteConfig\SiteConfig:
 
 SilverStripe\CMS\Model\SiteTree:
   extensions:
-    - IndexNow\Extensions\PageExtension
+    - IndexNow\Extensions\IndexNowExtension
 
 SilverStripe\Core\Injector\Injector:
   SilverStripe\Control\Director:
