@@ -23,11 +23,24 @@ class IndexNowExtension extends Extension
     private static int $timeout = 5;
 
     /**
+     * Classes that should never be submitted to IndexNow.
+     * Configurable via YAML. Checked using instanceof so subclasses are also excluded.
+     *
+     * @config
+     * @var array<class-string>
+     */
+    private static array $excluded_classes = [];
+
+    /**
      * Fires for Versioned objects when a draft is published to live.
      */
     public function onAfterPublish(): void
     {
         if (!Director::isLive()) {
+            return;
+        }
+
+        if ($this->isExcluded()) {
             return;
         }
 
@@ -54,6 +67,10 @@ class IndexNowExtension extends Extension
             return;
         }
 
+        if ($this->isExcluded()) {
+            return;
+        }
+
         $url = $this->getOwner()->AbsoluteLink();
         if (!$url || !($apiKey = $this->getApiKey())) {
             return;
@@ -69,6 +86,10 @@ class IndexNowExtension extends Extension
     public function onBeforeDelete(): void
     {
         if (!Director::isLive()) {
+            return;
+        }
+
+        if ($this->isExcluded()) {
             return;
         }
 
@@ -96,6 +117,10 @@ class IndexNowExtension extends Extension
             return;
         }
 
+        if ($this->isExcluded()) {
+            return;
+        }
+
         $owner = $this->getOwner();
 
         if ($owner->hasExtension(Versioned::class)) {
@@ -108,6 +133,19 @@ class IndexNowExtension extends Extension
         }
 
         $this->submitUrl($url, $apiKey);
+    }
+
+    private function isExcluded(): bool
+    {
+        $owner = $this->getOwner();
+
+        foreach (Config::inst()->get(self::class, 'excluded_classes') as $class) {
+            if ($owner instanceof $class) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function getApiKey(): ?string

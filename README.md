@@ -1,6 +1,6 @@
 # Silverstripe IndexNow
 
-Fork of [pixelpoems/silverstripe-indexnow](https://github.com/pixelpoems/silverstripe-indexnow) with various refactoring.
+Fork of [pixelpoems/silverstripe-indexnow](https://github.com/pixelpoems/silverstripe-indexnow) with various refactorings.
 
 This module integrates the [IndexNow](https://www.indexnow.org/) protocol into Silverstripe CMS, automatically notifying search engines when pages are published.
 
@@ -45,6 +45,17 @@ The extension fires on relevant lifecycle events:
 
 For Versioned objects, `ShowInSearch` is respected if the field exists. `IndexNowExtension` can be applied to any DataObject that has an `AbsoluteLink()` method, not just pages.
 
+Following page types are excluded from submission by default.
+
+```yaml
+IndexNow\Extensions\IndexNowExtension:
+  excluded_classes:
+    - SilverStripe\CMS\Model\RedirectorPage
+    - SilverStripe\CMS\Model\VirtualPage
+```
+
+Additional classes can be appended via your app's YAML config — the list is merged, so defaults are preserved.
+
 The module serves the key verification file dynamically at `/{key}.txt` — no file system writes needed.
 
 ### Suggested module
@@ -64,9 +75,5 @@ The module serves the key verification file dynamically at `/{key}.txt` — no f
 - **Translations** — All CMS strings use `_t()` with German translations in `lang/de.yml`.
 - **Silverstripe 6 only** — Dropped Silverstripe 5 support.
 - **Extension targets SiteTree** — Applied to `SilverStripe\CMS\Model\SiteTree` instead of `Page` for coverage of all page types.
+- **Excluded classes** — `RedirectorPage` and `VirtualPage` are excluded by default via a configurable `excluded_classes` list, preventing duplicate or misdirected submissions.
 - **PSR-4 namespace** — Fixed to `IndexNow\` matching actual class declarations.
-
-## Reporting Issues
-
-Please [create an issue](https://github.com/lerni/silverstripe-indexnow/issues) for any bugs you've found, or features you're missing.
-

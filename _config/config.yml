@@ -10,6 +10,11 @@ SilverStripe\CMS\Model\SiteTree:
   extensions:
     - IndexNow\Extensions\IndexNowExtension
 
+IndexNow\Extensions\IndexNowExtension:
+  excluded_classes:
+    - SilverStripe\CMS\Model\RedirectorPage
+    - SilverStripe\CMS\Model\VirtualPage
+
 SilverStripe\Core\Injector\Injector:
   SilverStripe\Control\Director:
     properties:
